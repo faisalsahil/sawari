@@ -1,0 +1,26 @@
+.panel.panel-primary
+  .panel-heading
+    = @email_history.subject
+    |
+    = @email_history.from_email
+    .pull-right
+      = @history_clients
+      \/
+      = @clients
+  .panel-body
+    = @email_history.html.html_safe
+    -#= text_area_tag('html', @email_history.html, size: '77x18', placeholder: 'Enter Html here', style: 'resize: none;', readonly: true)
+.panel.panel-warning
+  .panel-heading
+    = 'Clients'
+  .panel-body
+    - h_clients  = @email_history.history_clients
+    %table.table.table-striped.table-bordered.template-list-table{:cellspacing => '0', :width => '100%'}
+      %thead
+        %th Email
+        %th Email count
+      %tbody
+        - h_clients && h_clients.each_with_index do |h_client,index|
+          %tr
+            %td= "#{h_client.client.email}"
+            %td= "#{h_client.count}"

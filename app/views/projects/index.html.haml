@@ -1,0 +1,32 @@
+.row
+  - if admin?
+    .pull-right
+      = render "new_project_partial", locals: {object_type: Project.new}
+  %h3.col-md-6 Project List
+%div
+  %table.table.table-striped.table-bordered.list-data-table{:cellspacing => "0", :width => "100%"}
+    %thead
+      %th Sr#
+      %th Name
+      %th Created at
+      %th Action
+    %tbody
+      - @projects.each_with_index do |project,index|
+        %tr
+          %td= "#{index+1}"
+          %td= link_to project.name, project_path(project)
+          %td= "#{project.created_at}"
+          %td
+            - if admin? || access_write_project(project.id)
+              = link_to 'Edit', edit_project_path(project)
+              |
+              - if project.is_deleted == false
+                = link_to "Delete",project_path(project),  method: :delete, data: { confirm: 'Are you sure to delete project ?'}
+              - else
+                = link_to "Undo",project_path(project),  method: :delete, data: { confirm: 'Are you sure to activate project ?'}
+:javascript
+  $(document).ready(function(){
+      $('.list-data-table').DataTable({
+        "pageLength": 50
+       });
+  })

@@ -1,0 +1,27 @@
+.row
+  .col-md-6
+    [#{link_to "Back to Projects", projects_path}]
+  .pull-right
+    - if admin? || access_write_project(@project.id)
+      = render "new_project_category_partial"
+%h3= @project.name
+.row.project
+  .col-md-4.vertical
+    - @categories.each do |category|
+      - if admin? || !category.is_deleted
+        .panel.panel-default
+          .panel-heading
+            = category.name
+            .pull-right
+              - if admin? || access_write_project(@project.id)
+                - if category.is_deleted == false
+                  [#{link_to "Edit", edit_project_category_path(@project, category)}]
+                  [#{link_to "Delete",project_category_path(@project,category),  method: :delete, data: { confirm: 'Are you sure to delete category ?'}}]
+                  [#{link_to "New End-point", new_category_end_point_path(category)}]
+                - else
+                  [#{link_to "Undo",project_category_path(@project,category),  method: :delete, data: { confirm: 'Are you sure to activate category ?'}}]
+          .panel-body
+            - category.end_points.each do |end_point|
+              %li= link_to end_point.name, category_end_point_path(category, end_point), remote: true
+  .col-md-8.vertical#show-parent
+    #show

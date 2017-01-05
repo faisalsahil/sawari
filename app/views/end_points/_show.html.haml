@@ -1,0 +1,44 @@
+.panel.panel-default
+  .panel-heading
+    = @category.project.name
+    |
+    = @category.name
+    | #{@end_point.name}
+    .pull-right
+      - if admin? || access_write_project(@category.project.id)
+        - if @end_point.is_deleted == false
+          [#{link_to "Edit", edit_category_end_point_path(@category, @end_point)}]
+          [#{link_to "Delete",category_end_point_path(@category, @end_point),  method: :delete, data: { confirm: 'Are you sure to delete ?'}}]
+        - else
+          [#{link_to "Undo",category_end_point_path(@category, @end_point),  method: :delete, data: { confirm: 'Are you sure to activate ?'}}]
+  .panel-body
+    #end_point_name_div
+      %b Name:
+      %br/
+      = @end_point.name
+    #end_point_url_div
+      %b URL:
+      %br/
+      = @end_point.url
+    #end_point_url_div
+      %b Method:
+      %br/
+      = @end_point.method
+    #end_point_url_div
+      %b Request:
+      %br/
+      - my_hash = JSON[@end_point.request]
+      %pre
+        -#= JSON.parse @end_point.request
+        = JSON.pretty_generate(my_hash)
+    #end_point_url_div
+      %b Response:
+      %br/
+      - my_hash = (JSON[@end_point.response])
+      %pre
+        -#= JSON.parse @end_point.request
+        = JSON.pretty_generate(my_hash)
+    #end_point_url_div
+      %b Notes:
+      %br/
+      = @end_point.notes

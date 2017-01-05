@@ -1,0 +1,42 @@
+%div
+  %p{:style => "font-size: 20px;"}
+    = @category.name
+    |
+    Create New End-point
+  %hr/
+= form_for(@end_point, :url=> category_end_points_path(@category) , :html => {:class => 'form-horizontal' }) do |f|
+  - if @end_point.errors.any?
+    %h2
+      = pluralize(@end_point.errors.count, "error")
+      prohibited this end point from being saved:
+    %ul
+      - @end_point.errors.full_messages.each do |message|
+        %li= message
+
+  .form-group
+    %label.col-sm-2.control-label End-point name:
+    .col-sm-10
+      = f.text_field :name, placeholder: "End-point Name"
+  .form-group
+    %label.col-sm-2.control-label End-point URL:
+    .col-sm-10
+      = f.text_field :url, placeholder: "End-point URL"
+  .form-group
+    %label.col-sm-2.control-label Method:
+    .col-sm-10
+      = select_tag "end_point[method]", options_for_select(@methods.collect {|p| [ p[:name], p[:id] ] })
+  .form-group
+    %label.col-sm-2.control-label Request:
+    .col-sm-10
+      = f.text_area(:request, size: "60x10", placeholder: "Write request code here ...")
+  .form-group
+    %label.col-sm-2.control-label Response:
+    .col-sm-10
+      = f.text_area(:response, size: "60x10", placeholder: "Write response code here ...")
+  .form-group
+    %label.col-sm-2.control-label Notes:
+    .col-sm-10
+      = f.text_area(:notes, size: "60x10", placeholder: "Write notes here ...")
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit "Save", :class => 'btn-primary'

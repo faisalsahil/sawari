@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  project_id_integer: MyString
+  access_status: 1
+
+two:
+  user_id: 1
+  project_id_integer: MyString
+  access_status: 1
+
+# == Schema Information
+#
+# Table name: user_projects
+#
+#  id            :integer          not null, primary key
+#  user_id       :integer
+#  project_id    :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  access_status :string(255)
+#

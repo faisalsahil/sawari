@@ -1,0 +1,27 @@
+.row
+  .col-md-6
+    [#{link_to "Back to Templates", templates_path}]
+%br/
+%br/
+%div.row
+  .col-md-5.vertical
+    %table.table.table-striped.table-bordered.template-list-table{:cellspacing => '0', :width => '100%'}
+      %thead
+        %th Sr#
+        %th Subject
+        %th Actions
+      %tbody
+        - @email_histories.each_with_index do |history,index|
+          %tr
+            %td= index + 1
+            %td= "#{history.subject}"
+            %td
+              = link_to 'view', email_history_path(@template, history), remote: true
+              |
+              = link_to 'Send mail',  send_email_email_history_path(history)
+  .col-md-7.vertical#show-parent
+    #show
+:javascript
+  $(document).ready(function(){
+     $('.template-list-table').DataTable();
+  })

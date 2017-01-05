@@ -1,0 +1,3 @@
+= form_for(Category.new, url: project_categories_path(@project),:html => {:class => 'form-inline' }) do |f|
+  = f.text_field :name, placeholder: "Category Name"
+  = f.submit "Create Category", :class => 'btn-primary'

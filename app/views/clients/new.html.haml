@@ -1,0 +1,5 @@
+%h2 Import Clients
+= form_tag import_clients_path, multipart: true do
+  = file_field_tag :file
+  %br/
+  = submit_tag 'Import', class: 'btn vtn-mini btn-primary btn-round btn-sm'

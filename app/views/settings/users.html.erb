@@ -1,0 +1,94 @@
+<%#= stylesheet_link_tag "bootstrap.vertical-tabs" %>
+<div class="col-xs-3"> <!-- required for floating -->
+  <!-- Nav tabs -->
+
+
+  <ul class="nav nav-tabs tabs-left">
+    <% @users.each_with_index do |user, index|%>
+        <% if index == 0 %>
+            <li class="active"><a href=<%= "##{user.id}" %> data-toggle="tab"><%= user.email %></a></li>
+        <% else %>
+            <li>
+              <a href=<%= "##{user.id}" %> data-toggle="tab"><%= user.email %></a>
+            </li>
+        <% end %>
+    <% end %>
+  </ul>
+</div>
+
+<div class="col-xs-9">
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <% @users.each_with_index do |user, index|%>
+        <% if index == 0 %>
+            <div class="tab-pane active" id=<%= "#{user.id}" %>>
+              <table class="table table-striped ">
+                <thead>
+                <th>User</th>
+                <th>Access</th>
+                </thead>
+                <tbody>
+                <%= form_tag(create_user_projects_settings_path, :method=>'post', :multipart => true) do %>
+                    <%= hidden_field_tag :user_id, user.id %>
+                    <% @projects.each do |project| %>
+                        <% user_project = user.user_projects.find_by_project_id(project.id) %>
+                        <tr>
+                          <td class="col-md=4"><%= project.name %></td>
+                          <td>
+                            <% if user_project.present? && user_project.access_status == AppConstants::READ %>
+                                <%= check_box_tag 'read_project[]', project.id, true, class: "check_box_input" %>Read only
+                            <% else %>
+                                <%= check_box_tag 'read_project[]', project.id, false, class: "check_box_input"%>Read only
+                            <% end %>
+
+                            <% if user_project.present? && user_project.access_status == AppConstants::WRITE %>
+                                <%= check_box_tag 'write_project[]', project.id, true, class: "check_box_input" %>Read Write
+                            <% else %>
+                                <%= check_box_tag 'write_project[]', project.id, false, class: "check_box_input" %>Read Write
+                            <% end %>
+                          </td>
+                        </tr>
+                    <% end %>
+                    <%= submit_tag "Save", :class => "btn btn-primary btn-mini pull-right" %>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+        <% else %>
+            <div class="tab-pane" id=<%= "#{user.id}" %>>
+              <table class="table table-striped ">
+                <thead>
+                <th>User</th>
+                <th>Access</th>
+                </thead>
+                <tbody>
+                <%= form_tag(create_user_projects_settings_path, :method=>'post', :multipart => true) do %>
+                    <%= hidden_field_tag :user_id,  user.id %>
+                    <% @projects.each do |project| %>
+                        <% user_project = user.user_projects.find_by_project_id(project.id) %>
+                        <tr>
+                          <td class="col-md=4"><%= project.name %></td>
+                          <td>
+                            <% if user_project.present? && user_project.access_status == AppConstants::READ %>
+                                <%= check_box_tag 'read_project[]', project.id, true, class: "check_box_input" %>Read only
+                            <% else %>
+                                <%= check_box_tag 'read_project[]', project.id, false, class: "check_box_input" %>Read only
+                            <% end %>
+
+                            <% if user_project.present? && user_project.access_status == AppConstants::WRITE %>
+                                <%= check_box_tag 'write_project[]', project.id, true, class: "check_box_input" %>Read Write
+                            <% else %>
+                                <%= check_box_tag 'write_project[]', project.id, false, class: "check_box_input" %>Read Write
+                            <% end %>
+                          </td>
+                        </tr>
+                    <% end %>
+                    <%= submit_tag "Save", :class => "btn btn-primary btn-mini pull-right" %>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+        <% end %>
+    <% end %>
+  </div>
+</div>

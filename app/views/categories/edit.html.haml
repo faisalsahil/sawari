@@ -1,0 +1,12 @@
+#wrapper
+  %h3{:style => "text-align: center;padding-bottom: 18px;"} Edit Category
+  #login_area_bg
+    .registration_form_css
+      = form_for(@category, :url=>project_category_path(@project, @category) ,:html => {:class => 'form-horizontal' }) do |f|
+        .form-group
+          %label.control-label.col-sm-2{:for => "name"} Category Name:
+          .col-sm-10
+            = f.text_field :name, class: "form-control", :required => true
+        .form-group
+          %div{:style => "margin-left: 19%;"}
+            = f.submit "update", :class => 'btn-primary'

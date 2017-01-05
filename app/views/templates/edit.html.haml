@@ -1,0 +1,56 @@
+= link_to '[Back to Templates]', templates_path
+%h2 Edit Template
+= form_for(@template, :url=> template_path(@template) , :html => {:class => 'form-horizontal' }) do |f|
+  - if @template.errors.any?
+    %h2
+      = pluralize(@template.errors.count, 'error')
+      prohibited this end point from being saved:
+    %ul
+      - @template.errors.full_messages.each do |message|
+        %li= message
+  .form-group
+    %label.col-sm-2.control-label Subject:
+    .col-sm-10
+      = f.text_field :subject, placeholder: 'subject'
+  .form-group
+    %label.col-sm-2.control-label From Email:
+    .col-sm-10
+      = f.text_field :from, placeholder: 'From email'
+      %span{:style => 'font-size:12px;margin-left: 20%;'}
+        Use
+        = succeed ',' do
+          %span{:style => 'color:red; font-weight:bold;'} {{FULL_NAME}}
+        = succeed ',' do
+          %span{:style => 'color:red; font-weight:bold;'} {{FIRST_NAME}}
+        = succeed ',' do
+          %span{:style => 'color:red; font-weight:bold;'} {{LAST_NAME}}
+        = succeed ',' do
+          %span{:style => 'color:red; font-weight:bold;'} {{EMAIL}}
+        = succeed ',' do
+          %span{:style => 'color:red; font-weight:bold;'} {{COMPANY}}
+        %span{:style => 'color:red; font-weight:bold;'} {{PHONE}}
+  .form-group
+    %label.col-sm-2.control-label HTML:
+    .col-sm-10
+      = f.text_area(:html, size: '100x18', placeholder: 'Enter Html here', class: 'wysihtml5')
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit 'Save', :class => 'btn-primary'
+
+:javascript
+  $(document).ready(function(){
+    $('.wysihtml5').each(function(i, elem) {
+      $(elem).wysihtml5(
+        {'toolbar':
+          {
+            'blockquote': false,
+            'html': true,
+            'image': false,
+            "size": 'sm',
+            "color": true
+          }
+        }
+      );
+    });
+
+  })

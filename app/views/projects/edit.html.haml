@@ -1,0 +1,8 @@
+%h3 Edit Project
+%hr/
+= form_for(@project, url: project_path(@project), method: 'put', :html => {:class => 'form-horizontal' }) do |f|
+  - if @project.errors.any?
+    - @project.errors.full_messages.each do |msg|
+      %p= msg
+  = f.text_field :name, placeholder: "project name", style: ' height: 29px;'
+  = f.submit "Save", :class => 'btn btn-primary btn-mini'

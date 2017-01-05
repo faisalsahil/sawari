@@ -1,0 +1,26 @@
+= link_to 'Add Template', new_template_path, class: 'btn btn-primary btn-sm pull-right'
+%br/
+%br/
+%div
+  %table.table.table-striped.table-bordered.template-list-table{:cellspacing => '0', :width => '100%'}
+    %thead
+      %th Subject
+      %th From Email
+      %th Actions
+    %tbody
+      - @templates.each_with_index do |template,index|
+        %tr
+          %td= "#{template.subject}"
+          %td= "#{template.from}"
+          %td
+            = link_to 'Edit',   edit_template_path(template)
+            |
+            = link_to 'Send mail',  send_mail_template_path(template)
+            |
+            = link_to 'History',  email_histories_path(template)
+            |
+            = link_to 'Delete', template_path(template),  method: :delete, data: { confirm: 'Are you sure to delete template ?' }
+:javascript
+  $(document).ready(function(){
+     $('.template-list-table').DataTable();
+  })

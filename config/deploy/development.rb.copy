@@ -1,0 +1,7 @@
+server '45.79.128.192', user: 'apidoc', roles: %w{app db web}
+
+set :application, 'APIDoc'
+
+set :deploy_to, '/home/apidoc/APIDoc'
+
+set :repo_url, 'git@gitrepos.com:rubyonrails/APIDoc.git'
