@@ -54,7 +54,7 @@
                 %li
                   %a.user-profile.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "javascript:;"}
                     %img{:alt => "", :src => "/assets/default.png"}>/
-                    John Doe
+                    #{current_user.first_name}  #{current_user.last_name}
                     %span.fa.fa-angle-down
                   %ul.dropdown-menu.dropdown-usermenu.pull-right
                     %li
